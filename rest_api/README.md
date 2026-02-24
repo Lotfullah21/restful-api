@@ -6,52 +6,53 @@ This documentation is organized into several key sections to help developers bui
 
 ### Response and URLS
 
-- [Command](./documents/COMMAND.md)
-- [HTTP-HTTPS](./documents/http-https/HTTP-HTTPS.md)
-- [Response-types](./documents/http-https/RESONSE-TYPES.md)
-- [URL](./documents/http-https/URL.md)
+- [Command](./documents/command.md)
+- [HTTP-HTTPS](./documents/02-http-https/http_https.md)
+- [Response-types](./documents/02-http-https/response_types.md)
+- [URL](./documents/02-http-https/url.md)
+- [Query-string-and-params](./documents/02-http-https/query_string_and_params.md)
 
 #### RESTful API
 
-- [RESTful-API](./documents/rest-api/REST_API.md)
-- [Naming-conventions](./documents/rest-api/NAMING-CONVENTIONS.MD)
-- [Rest-principles](./documents/rest-api/REST_PRINCIPLES.md)
-- [Security-practices](./documents/rest-api/SECURITY.md)
-- [Setup](./documents/SETUP.md)
+- [RESTful-API](./documents/01-rest-api/readme.md)
+- [Naming-conventions](./documents/01-rest-api/naming_conventions.md)
+- [Rest-principles](./documents/01-rest-api/rest_principles.md)
+- [Security-practices](./documents/01-rest-api/security.md)
+- [Setup](./documents/setup.md)
 
 #### Django Rest Framework
 
-- [DRF](./documents/drf/DRF.md)
-- [API-view](./documents/drf/API-VIEW.md)
-- [Class-based-view](./documents/drf/CLASS-BASED-VIEW.md)
-- [Generics-views](./documents/drf/GENERICS.md)
+- [DRF](./documents/drf/readme.md)
+- [API-view](./documents/drf/01_api_view.md)
+- [Class-based-view](./documents/drf/02_class_based_view.md)
+- [Generics-views](./documents/drf/03_generics.md)
 
 #### Serialization
 
-- [Serializers](./documents/serialization/SERIALIZERS.md)
-- [Generics-views](./documents/serialization/GENERICS.md)
-- [Deserialization](./documents/serialization/DESERIALIZER.md)
-- [Sanitization](./documents/serialization/SANITIZATION.md)
-- [Model-creation](./documents/serialization/MODEL-CREATION.md)
-- [Validation](./documents/serialization/VALIDATION.md)
-- [Renderers](./documents/serialization/RENDERERS.md)
-- [Renderers](./documents/serialization/MODEL-CREATION.md)
+- [Serializers](./documents/serialization/serializers.md)
+- [Generics-views](./documents/serialization/generics.md)
+- [Deserialization](./documents/serialization/deserializer.md)
+- [Sanitization](./documents/serialization/sanitization.md)
+- [Model-creation](./documents/serialization/model_creation.md)
+- [Validation](./documents/serialization/validation.md)
+- [Renderers](./documents/serialization/renderers.md)
+- [Renderers](./documents/serialization/model_creation.md)
 
 #### Filter/Search
 
-- [Filtering-searching](./documents/filter-search/FILTERING.md)
-- [Filtering-class-based-views](./documents/filter-search/FILTERING-CLASSBASED-VIEWS.md)
-- [Ordering](./documents/filter-search/ORDERING.md)
-- [Caching](./documents/filter-search/CACHING.md)
-- [Pagination](./documents/filter-search/PAGINATION.md)
+- [Filtering-searching](./documents/filter-search/filtering.md)
+- [Filtering-class-based-views](./documents/filter-search/filtering_classbased_views.md)
+- [Ordering](./documents/filter-search/ordering.md)
+- [Caching](./documents/caching/readme.md)
+- [Pagination](./documents/filter-search/pagination.md)
 
 #### Authentication and securing APIs
 
-- [API-restriction](./documents/Authentication/AUTH.md)
-- [Djoser](./documents/Authentication/DJOSER.md)
-- [JWT](./documents/Authentication/JWT.md)
-- [Throttling](./documents/Authentication/THROTTLING.md)
-- [Token](./documents/Authentication/TOKEN.md)
+- [API-restriction](./documents/authentication/auth.md)
+- [Djoser](./documents/authentication/djoser.md)
+- [JWT](./documents/authentication/jwt.md)
+- [Throttling](./documents/authentication/throttling.md)
+- [Token](./documents/authentication/token.md)
 
 ### Resources
 
@@ -74,7 +75,7 @@ This documentation is organized into several key sections to help developers bui
 
 ### Installation
 
-To get started with this repository, clone it to your local machine and follow the instructions in the `SETUP.md` document for detailed setup steps.
+To get started with this repository, clone it to your local machine and follow the instructions in the `setup.md` document for detailed setup steps.
 
 ### Features
 

@@ -1,105 +1,196 @@
-## Pagination
+# Pagination
 
-we use pagination to chunk results and instead of sending the whole data at one time, we send it in chunks.
+## What is Pagination?
 
-we should also limit number of data points can be request per page.
-for instance, if we set `limit=10` and the client needs 20 data points, then the client needs to make two requests.
+Pagination is the process of splitting a large list of results into smaller chunks called pages, and returning one page at a time. Instead of returning all 10,000 courses at once, you return 10 per request and let the client ask for the next page when it is ready.
 
-`https/courses?perpage=10&page=4`
-`https/courses?perpage=10&page=5`
+Without pagination, a single API request could transfer megabytes of data, slow down the server, and crash the client trying to render it all.
 
-if the client make a request of `perpage=40`, we need send a `bad request` response to the client.
+```mermaid
+flowchart LR
+    A["10,000 courses in DB"]
+    A --> B["Without pagination:\nAll 10,000 returned at once\nSlow, wasteful"]
+    A --> C["With pagination:\n10 per page\nClient requests page 1, 2, 3..."]
+```
 
-add the following code in `views.py`
+---
+
+## How Clients Request Pages
+
+The client passes two query parameters:
+
+- `page` — which page number to fetch
+- `perpage` (or `limit`) — how many items per page
+
+```
+GET /courses/?perpage=10&page=1    → first 10 courses
+GET /courses/?perpage=10&page=2    → next 10 courses
+GET /courses/?perpage=10&page=3    → next 10 after that
+```
+
+You should also enforce a **maximum page size** to prevent a client from requesting `perpage=100000`.
+
+---
+
+## Manual Pagination with APIView
+
+Django's built-in `Paginator` class handles the math of splitting a queryset into pages.
 
 ```py
+# views.py
 from django.core.paginator import Paginator, EmptyPage
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 class Courses(APIView):
     def get(self, request):
         courses = Course.objects.all()
-        perpage = request.query_params.get("perpage",default=2)
-        page = request.query_params.get("page",default=1)
+
+        perpage = request.query_params.get("perpage", default=2)  # default: 2 per page
+        page = request.query_params.get("page", default=1)        # default: page 1
+
         paginator = Paginator(courses, per_page=perpage)
+
         try:
             courses = paginator.page(number=page)
         except EmptyPage:
-            courses = []
-        serialized_course = CourseSerializer(courses, many=True)
+            courses = []   # page number is out of range — return empty list
+
+        serializer = CourseSerializer(courses, many=True)
+        return Response(serializer.data)
 ```
 
-if using class based views, add the following in `settings.py`
+### What each part does
+
+```mermaid
+flowchart TD
+    A["Course.objects.all()\nFetch all records from DB"]
+    A --> B["Paginator(courses, per_page=10)\nSplit into pages of 10"]
+    B --> C["paginator.page(number=2)\nGet page 2"]
+    C --> D{EmptyPage?}
+    D -->|Page exists| E["Serialize the page's records"]
+    D -->|Page out of range| F["Return empty list []"]
+    E --> G["Return Response"]
+    F --> G
+```
+
+- `Paginator(queryset, per_page=N)` — wraps the queryset and divides it into pages of N items
+- `paginator.page(number=N)` — returns the records for page N
+- `EmptyPage` — raised when the requested page number is beyond the last page. Catching it prevents a 500 server error
+
+---
+
+## Automatic Pagination with Generic Views
+
+When using DRF generic views, you can configure pagination globally in `settings.py` and it applies automatically to all list views.
 
 ```py
 # settings.py
 REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
-        'rest_framework_xml.renderers.XMLRenderer',
-    ],
-    'DEFAULT_FILTER_BACKENDS': [
-        'django_filters.rest_framework.DjangoFilterBackend',
-        'rest_framework.filters.OrderingFilter',
-        'rest_framework.filters.SearchFilter',
-
-    ],
-'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-# now 10 items per page will be served.
-'PAGE_SIZE': 10
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,   # default: 10 items per page
 }
 ```
 
-## End point
+`PageNumberPagination` is DRF's built-in pagination class. With this setting, any `ListAPIView` or `ListCreateAPIView` automatically paginates its results. The response also includes metadata like total count and links to the next/previous page.
 
-```ruby
-# Get us the resource in page number 2
-http://127.0.0.1:8000/courses/?page=2
+URL:
+
+```
+GET /courses/?page=2    → returns page 2 with 10 items
 ```
 
-### Pagination for Specific Class-Based View
+Response shape with pagination:
 
-If we want pagination only for a specific view, we can explicitly define it by overriding the pagination_class in class-based view.
+```json
+{
+    "count": 87,
+    "next": "http://127.0.0.1:8000/courses/?page=3",
+    "previous": "http://127.0.0.1:8000/courses/?page=1",
+    "results": [...]
+}
+```
+
+---
+
+## Custom Pagination Class (Per-View)
+
+When you need different pagination settings for one specific view — a different page size, a different query parameter name, or a maximum cap — you create a custom pagination class and assign it to that view.
 
 ```py
+# views.py
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import ListAPIView
 from .models import Course
 from .serializers import CourseSerializer
 
 class CoursePagination(PageNumberPagination):
-     # number of results per page
-    page_size = 10
-    # clients to specify page size, perpage=10
-    page_size_query_param = "perpage"
-     # maximum page size allowed
-    max_page_size = 20
+    page_size = 10                       # default items per page
+    page_size_query_param = "perpage"    # client can override with ?perpage=5
+    max_page_size = 20                   # client cannot request more than 20
 
 class CourseListView(ListAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
-    # custom pagination
-    pagination_class = CoursePagination
-
+    pagination_class = CoursePagination  # use this custom paginator
 ```
 
-```ruby
-http://127.0.0.1:8000/courses/?perpage=5
+```mermaid
+flowchart LR
+    A["GET /courses/?perpage=5&page=2"]
+    A --> B["CoursePagination reads perpage=5"]
+    B --> C{perpage > max_page_size?}
+    C -->|Yes: cap it at 20| D["Use max_page_size=20"]
+    C -->|No| E["Use perpage=5"]
+    D --> F["Return page 2 with capped size"]
+    E --> F
 ```
 
-### 5. Global Configuration (Optional)
+URL examples:
 
-we want to make this behavior global, set PAGE_SIZE_QUERY_PARAM in settings.py:
+```
+GET /courses/?perpage=5           → 5 items on page 1
+GET /courses/?perpage=5&page=2    → 5 items on page 2
+GET /courses/?perpage=50          → capped at 20 (max_page_size)
+```
+
+### Custom pagination attributes
+
+| Attribute               | What it does                                                               |
+| ----------------------- | -------------------------------------------------------------------------- |
+| `page_size`             | Default number of items per page                                           |
+| `page_size_query_param` | The query parameter name the client uses to set page size (e.g. `perpage`) |
+| `max_page_size`         | The maximum the client is allowed to request — prevents abuse              |
+
+---
+
+## Global Pagination with Dynamic Page Size
+
+If you want the `perpage` parameter to work globally across all views, set it in `settings.py`:
 
 ```py
-
+# settings.py
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,  # Default page size
-    'PAGE_SIZE_QUERY_PARAM': 'perpage',  # Allow query param for dynamic page size
-    'MAX_PAGE_SIZE': 50,  # Optional: Maximum page size
+    'PAGE_SIZE': 10,
 }
-
 ```
 
-Sometimes, the global one, especially perpage does not work but when we define the custom one, it works.
+Note: The global `PAGE_SIZE_QUERY_PARAM` setting does not always work reliably. When in doubt, define a custom pagination class on the view directly — that is always more predictable.
+
+---
+
+## Combining Pagination with Filtering and Ordering
+
+All three work together. The filter and ordering are applied to the full queryset first, then pagination splits the filtered, sorted result into pages.
+
+```mermaid
+flowchart LR
+    A["GET /courses/?level=easy&ordering=price&page=2&perpage=5"]
+    A --> B["DjangoFilterBackend\nfilters by level='easy'"]
+    B --> C["OrderingFilter\nsorts by price ASC"]
+    C --> D["Paginator\nreturns page 2, 5 items"]
+    D --> E["Serializer → JSON Response"]
+```
+
+The order of operations is always: **filter → order → paginate → serialize**.

@@ -1,73 +1,156 @@
-## django-filter
+# Ordering
 
-a package used with class based views.
+## What is Ordering?
 
-## ordering
+Ordering (also called sorting) means controlling the sequence in which results are returned. Instead of getting courses in the order they were inserted into the database, the client can ask "sort these by price, lowest first" or "sort by title alphabetically".
 
-Based on certain parameters, we can order or sort our `API` result.
+Like filtering, ordering is controlled by query parameters in the URL.
 
-For instance, sorting based on price, or length of the course name and so on. The procedure is no different than filter with few subtle difference.
+## How it Works
 
-- add a query parameter in the url
-- if you want order based on more than one parameter, add a `,` between the parameters
-- by default, the ordering is done in ascending order, from lowest to highest.
-- if you want to order them in reverse order, add `-` before a query parameter
+```mermaid
+flowchart LR
+    A["GET /courses/?ordering=price"]
+    A --> B["request.query_params.get('ordering')"]
+    B --> C["courses.order_by('price')"]
+    C --> D["SQL: ORDER BY price ASC"]
+    D --> E["Serializer → JSON → Response"]
+```
 
-`http://127.0.0.1:8000/api/courses-items/?ordering=price`
+---
+
+## Basic Ordering (APIView)
+
+The client passes an `ordering` query parameter with the field name to sort by.
+
+URL: `GET /api/courses/?ordering=price`
 
 ```py
 class Courses(APIView):
     def get(self, request):
         courses = Course.objects.all()
         ordering = request.query_params.get("ordering")
+
         if ordering:
             courses = courses.order_by(ordering)
-        serialized_course = CourseSerializer(courses, many=True)
-        return Response(serialized_course.data)
+
+        serializer = CourseSerializer(courses, many=True)
+        return Response(serializer.data)
 ```
 
-### ordering based on multiple parameters
+`courses.order_by("price")` tells Django to sort the SQL query by the `price` column. By default, this is ascending — lowest to highest.
 
-To order the response based on many parameters, add the `,` in between and use python `split` method to get all the parameters and `*` destructuring to pass them to `order_by` method.
+### Reverse Order (Descending)
 
-`http://127.0.0.1:8000/api/courses-items/?ordering=price,title`
+To sort in descending order (highest to lowest), the client adds a `-` prefix before the field name:
+
+```
+GET /api/courses/?ordering=-price     → most expensive first
+GET /api/courses/?ordering=price      → cheapest first
+GET /api/courses/?ordering=-title     → Z to A
+GET /api/courses/?ordering=title      → A to Z
+```
+
+This works automatically — Django's `order_by("-price")` means descending.
+
+---
+
+## Ordering by Multiple Fields
+
+Sometimes you want a secondary sort. For example: sort by price first, and if two courses have the same price, sort those by title alphabetically.
+
+The client separates multiple fields with a comma:
+
+```
+GET /api/courses/?ordering=price,title
+```
+
+On the server, split the string and unpack it into `order_by`:
 
 ```py
 class Courses(APIView):
     def get(self, request):
         courses = Course.objects.all()
         ordering = request.query_params.get("ordering")
+
         if ordering:
-            # split and grab the values from ordering
-            order_values = ordering.split(",")
-            # pass them all
-            courses = courses.order_by(*order_values)
-        serialized_course = CourseSerializer(courses, many=True)
-        return Response(serialized_course.data)
+            order_fields = ordering.split(",")   # "price,title" → ["price", "title"]
+            courses = courses.order_by(*order_fields)  # order_by("price", "title")
+
+        serializer = CourseSerializer(courses, many=True)
+        return Response(serializer.data)
 ```
+
+### What `split` and `*` do here
+
+```mermaid
+flowchart LR
+    A["ordering = 'price,title'"]
+    A --> B["ordering.split(',')"]
+    B --> C["['price', 'title']"]
+    C --> D["courses.order_by(*['price', 'title'])"]
+    D --> E["courses.order_by('price', 'title')"]
+    E --> F["SQL: ORDER BY price ASC, title ASC"]
+```
+
+- `.split(",")` breaks the string at every comma and returns a list: `["price", "title"]`
+- `*` (the unpacking operator) expands the list into individual arguments, so `order_by(*["price", "title"])` becomes `order_by("price", "title")`
+
+Without `*` you would be passing a list object as one argument, which would not work.
+
+---
+
+## Ordering with Generic Views (OrderingFilter)
+
+When using DRF's generic views, you can use the built-in `OrderingFilter` backend instead of writing the ordering logic manually.
+
+Add it to `settings.py`:
 
 ```py
-if ordering:
-    # split and grab the values from ordering
-    order_values = ordering.split(",")
-    # pass them all
-    courses = courses.order_by(*order_values)
+# settings.py
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.OrderingFilter',   # add this
+        'rest_framework.filters.SearchFilter',
+    ],
+}
 ```
 
-`.split`: splits the string based on `,` and returns an array of them, for instance, if params are `ordering=price,title`, then `order_values=["price", "title"]`.
+Then declare which fields are allowed to be sorted on in the view:
 
-`courses = courses.order_by(*order_values)`: unpack the order_values array and pass them to `order_by` method. now it will be like `courses = courses.order_by("price", "title")`.
+```py
+from rest_framework import generics, filters
+from .models import Course
+from .serializers import CourseSerializer
 
-### How ordering=price,title works:
+class CourseList(generics.ListAPIView):
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['price', 'title', 'course_start_date']  # client can sort by these
+    ordering = ['title']   # default ordering when no ?ordering= is provided
+```
 
-When we call the API with `?ordering=price,title`, Django will order the queryset of Course objects first by the price field (ascending by default), and then by the title field (also ascending).
-This means that courses with the same price will be ordered by title.
+The `ordering_fields` list acts as a whitelist — the client can only sort by fields you explicitly allow. This prevents clients from sorting by sensitive fields like internal IDs or timestamps you did not intend to expose.
 
-### What happens:
+URL examples:
 
-- The ordering query parameter (price,title) is captured in the API view.
-- It is split into a list of fields: ['price', 'title'].
-- These fields are passed to order_by in Django
-- Django orders the Course objects based on the specified fields in the query.
-- The fields passed in the ordering parameter (e.g., price, title) must match the field names in your Course model.
-- Django's order_by method operates directly on the model fields
+```
+GET /courses/?ordering=price             → cheapest first
+GET /courses/?ordering=-price            → most expensive first
+GET /courses/?ordering=price,title       → by price, then by title
+GET /courses/?ordering=-course_start_date → most recently started first
+```
+
+---
+
+## Summary
+
+| Feature | Manual (APIView) | Automatic (OrderingFilter) |
+|---------|-----------------|---------------------------|
+| Setup | Write `order_by()` logic yourself | Declare `ordering_fields` on the view |
+| Descending | Client sends `-fieldname` | Same |
+| Multiple fields | Split comma-separated string, unpack with `*` | Same, handled automatically |
+| Field whitelisting | You control it in code | Via `ordering_fields` list |
+| Default ordering | Set manually in code | Via `ordering` attribute |
