@@ -6,55 +6,55 @@ This documentation is organized into several key sections to help developers bui
 
 ### Response and URLS
 
-- [Command](./rest_api/documents/command.md)
-- [HTTP-HTTPS](./rest_api/documents/02-http-https/http_https.md)
-- [Response-types](./rest_api/documents/02-http-https/response_types.md)
-- [URL](./rest_api/documents/02-http-https/url.md)
-- [Query-string-and-params](./rest_api/documents/02-http-https/query_string_and_params.md)
+- [Command](./documents/command.md)
+- [HTTP-HTTPS](./documents/02-http-https/http_https.md)
+- [Response-types](./documents/02-http-https/response_types.md)
+- [URL](./documents/02-http-https/url.md)
+- [Query-string-and-params](./documents/02-http-https/query_string_and_params.md)
 
 #### RESTful API
 
-- [RESTful-API](./rest_api/documents/01-rest-api/readme.md)
-- [Naming-conventions](./rest_api/documents/01-rest-api/naming_conventions.md)
-- [Rest-principles](./rest_api/documents/01-rest-api/rest_principles.md)
-- [Security-practices](./rest_api/documents/01-rest-api/security.md)
-- [Setup](./rest_api/documents/setup.md)
+- [RESTful-API](./documents/01-rest-api/readme.md)
+- [Naming-conventions](./documents/01-rest-api/naming_conventions.md)
+- [Rest-principles](./documents/01-rest-api/rest_principles.md)
+- [Security-practices](./documents/01-rest-api/security.md)
+- [Setup](./documents/setup.md)
 
 #### Django Rest Framework
 
-- [DRF](./rest_api/documents/drf/readme.md)
-- [API-view](./rest_api/documents/drf/01_api_view.md)
-- [Class-based-view](./rest_api/documents/drf/02_class_based_view.md)
-- [Generics-views](./rest_api/documents/drf/03_generics.md)
+- [DRF](./documents/drf/readme.md)
+- [API-view](./documents/drf/01_api_view.md)
+- [Class-based-view](./documents/drf/02_class_based_view.md)
+- [Generics-views](./documents/drf/03_generics.md)
 
 #### Serialization
 
-- [Serializers](./rest_api/documents/serialization/serializers.md)
-- [Generics-views](./rest_api/documents/serialization/generics.md)
-- [Deserialization](./rest_api/documents/serialization/deserializer.md)
-- [Sanitization](./rest_api/documents/serialization/sanitization.md)
-- [Model-creation](./rest_api/documents/serialization/model_creation.md)
-- [Validation](./rest_api/documents/serialization/validation.md)
-- [Renderers](./rest_api/documents/serialization/renderers.md)
-- [Renderers](./rest_api/documents/serialization/model_creation.md)
+- [Serializers](./documents/serialization/serializers.md)
+- [Generics-views](./documents/serialization/generics.md)
+- [Deserialization](./documents/serialization/deserializer.md)
+- [Sanitization](./documents/serialization/sanitization.md)
+- [Model-creation](./documents/serialization/model_creation.md)
+- [Validation](./documents/serialization/validation.md)
+- [Renderers](./documents/serialization/renderers.md)
+- [Renderers](./documents/serialization/model_creation.md)
 
 #### Filter/Search
 
-- [Filtering-searching](./rest_api/documents/filter-search/filtering.md)
-- [Filtering-class-based-views](./rest_api/documents/filter-search/filtering_classbased_views.md)
-- [Ordering](./rest_api/documents/filter-search/ordering.md)
-- [caching](./rest_api/documents/caching/readme.md)
-- [caching-types](./rest_api/documents/caching/caching_types.md)
-- [redis](./rest_api/documents/caching/redis.md)
-- [redis-gcp](./rest_api/documents/caching/redis_gcp.md)
+- [Filtering-searching](./documents/filter-search/filtering.md)
+- [Filtering-class-based-views](./documents/filter-search/filtering_classbased_views.md)
+- [Ordering](./documents/filter-search/ordering.md)
+- [caching](./documents/caching/readme.md)
+- [caching-types](./documents/caching/caching_types.md)
+- [redis](./documents/caching/redis.md)
+- [redis-gcp](./documents/caching/redis_gcp.md)
 
 #### Authentication and securing APIs
 
-- [API-restriction](./rest_api/documents/authentication/auth.md)
-- [Djoser](./rest_api/documents/authentication/djoser.md)
-- [JWT](./rest_api/documents/authentication/jwt.md)
-- [Throttling](./rest_api/documents/authentication/throttling.md)
-- [Token](./rest_api/documents/authentication/token.md)
+- [API-restriction](./documents/03-authentication/auth.md)
+- [Djoser](./documents/03-authentication/djoser.md)
+- [JWT](./documents/03-authentication/jwt.md)
+- [Throttling](./documents/03-authentication/throttling.md)
+- [Token](./documents/03-authentication/token.md)
 
 ## Getting Started
 

@@ -52,7 +52,7 @@
 **How to learn it:**
 
 1. Watch: [Access Tokens vs Refresh Tokens — ByteByteGo (6 min)](https://www.youtube.com/watch?v=vSzjgWt8OqM)
-2. Read your own document: [01-auth-flow.md](../../03-api/02-api/05-auth/01-auth-flow.md) — Flows 1 through 4
+2. Read your own document: [03-login-flow.md](./03-login-flow.md) — Flows 1 through 4
 
 **Answer these before moving to Layer 4:**
 
@@ -74,7 +74,7 @@
 
 1. Watch: [Two Factor Auth Explained — Fireship (100 seconds)](https://www.youtube.com/watch?v=iXSyxm9jmmo)
 2. Read: [How TOTP works — Wikipedia](https://en.wikipedia.org/wiki/Time-based_one-time_password#Algorithm) (Algorithm section only)
-3. Read your own document: [01-auth-flow.md](../../03-api/02-api/05-auth/01-auth-flow.md) — Flows 2, 7, 8
+3. Read your own document: [03-login-flow.md](./03-login-flow.md) — Flows 2, 7, 8
 
 **Answer these before moving to Layer 5:**
 
@@ -95,7 +95,7 @@
 **How to learn it:**
 
 1. Watch: [RBAC Explained — ByteByteGo (5 min)](https://www.youtube.com/watch?v=4Uya_I_Oxjk)
-2. Read your own document: [auth-design.md §6](../../02-architecture/02-security-architecture/auth-design.md) — Role-to-Group Mapping and Permission Enforcement sections
+2. Read your own document: [05-rbac.md](./05-rbac.md) — Role-to-Group mapping and permission enforcement sections
 
 **Answer these after Layer 5:**
 
