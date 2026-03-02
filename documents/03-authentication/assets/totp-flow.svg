@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 520" font-family="'Segoe UI', system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="serverGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1"/>
+      <stop offset="100%" style="stop-color:#4f46e5"/>
+    </linearGradient>
+    <linearGradient id="phoneGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981"/>
+      <stop offset="100%" style="stop-color:#059669"/>
+    </linearGradient>
+    <linearGradient id="secretGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f59e0b"/>
+      <stop offset="100%" style="stop-color:#d97706"/>
+    </linearGradient>
+    <linearGradient id="matchGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#22c55e"/>
+      <stop offset="100%" style="stop-color:#16a34a"/>
+    </linearGradient>
+    <filter id="shadow" x="-4%" y="-4%" width="108%" height="112%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="720" height="520" rx="16" fill="#0f172a"/>
+
+  <!-- Title -->
+  <text x="360" y="38" text-anchor="middle" fill="#e2e8f0" font-size="18" font-weight="700" letter-spacing="0.5">TOTP Verification Flow</text>
+  <text x="360" y="58" text-anchor="middle" fill="#64748b" font-size="11">Time-based One-Time Password</text>
+
+  <!-- Server Column -->
+  <rect x="60" y="80" width="240" height="56" rx="12" fill="url(#serverGrad)" filter="url(#shadow)"/>
+  <text x="120" y="105" fill="#fff" font-size="13" font-weight="600">SERVER</text>
+  <text x="120" y="123" fill="#c7d2fe" font-size="10">Backend / API</text>
+  <!-- Server icon -->
+  <rect x="80" y="97" width="22" height="16" rx="3" fill="none" stroke="#c7d2fe" stroke-width="1.5"/>
+  <line x1="86" y1="100" x2="96" y2="100" stroke="#c7d2fe" stroke-width="1.5"/>
+  <line x1="86" y1="104" x2="93" y2="104" stroke="#c7d2fe" stroke-width="1.5"/>
+  <line x1="86" y1="108" x2="96" y2="108" stroke="#c7d2fe" stroke-width="1.5"/>
+
+  <!-- Phone Column -->
+  <rect x="420" y="80" width="240" height="56" rx="12" fill="url(#phoneGrad)" filter="url(#shadow)"/>
+  <text x="480" y="105" fill="#fff" font-size="13" font-weight="600">YOUR PHONE</text>
+  <text x="480" y="123" fill="#a7f3d0" font-size="10">Authenticator App</text>
+  <!-- Phone icon -->
+  <rect x="443" y="94" width="16" height="24" rx="3" fill="none" stroke="#a7f3d0" stroke-width="1.5"/>
+  <line x1="448" y1="112" x2="452" y2="112" stroke="#a7f3d0" stroke-width="1.5"/>
+
+  <!-- Shared Secret -->
+  <rect x="170" y="160" width="380" height="40" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="210" y="177" fill="#fbbf24" font-size="10" font-weight="600">SHARED SECRET</text>
+  <text x="345" y="177" fill="#fde68a" font-size="10" font-weight="500">JBSWY3DPEHPK3PXP</text>
+  <text x="360" y="192" text-anchor="middle" fill="#64748b" font-size="9">Established during QR code setup — both sides know this</text>
+  <!-- Lock icon indicators -->
+  <circle cx="190" cy="174" r="7" fill="none" stroke="#f59e0b" stroke-width="1.2"/>
+  <rect x="185" y="174" width="10" height="7" rx="1.5" fill="#f59e0b"/>
+
+  <!-- Vertical lines -->
+  <line x1="180" y1="210" x2="180" y2="430" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <line x1="540" y1="210" x2="540" y2="430" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+  <!-- Step 1: Current Time -->
+  <rect x="80" y="222" width="200" height="36" rx="8" fill="#1e293b" filter="url(#shadow)"/>
+  <circle cx="100" cy="240" r="9" fill="#6366f1"/>
+  <text x="100" y="244" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">1</text>
+  <text x="120" y="236" fill="#e2e8f0" font-size="10" font-weight="500">Current time</text>
+  <text x="120" y="250" fill="#94a3b8" font-size="10" font-family="monospace">1740000000</text>
+
+  <rect x="440" y="222" width="200" height="36" rx="8" fill="#1e293b" filter="url(#shadow)"/>
+  <circle cx="460" cy="240" r="9" fill="#10b981"/>
+  <text x="460" y="244" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">1</text>
+  <text x="480" y="236" fill="#e2e8f0" font-size="10" font-weight="500">Current time</text>
+  <text x="480" y="250" fill="#94a3b8" font-size="10" font-family="monospace">1740000000</text>
+
+  <!-- Time sync indicator -->
+  <line x1="280" y1="240" x2="440" y2="240" stroke="#475569" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="360" y="236" text-anchor="middle" fill="#475569" font-size="8">same clock</text>
+
+  <!-- Step 2: Hash -->
+  <rect x="80" y="278" width="200" height="42" rx="8" fill="#1e293b" filter="url(#shadow)"/>
+  <circle cx="100" cy="299" r="9" fill="#6366f1"/>
+  <text x="100" y="303" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">2</text>
+  <text x="120" y="293" fill="#e2e8f0" font-size="10" font-weight="500">HMAC-SHA1</text>
+  <text x="120" y="309" fill="#94a3b8" font-size="9">(secret + time)</text>
+
+  <rect x="440" y="278" width="200" height="42" rx="8" fill="#1e293b" filter="url(#shadow)"/>
+  <circle cx="460" cy="299" r="9" fill="#10b981"/>
+  <text x="460" y="303" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">2</text>
+  <text x="480" y="293" fill="#e2e8f0" font-size="10" font-weight="500">HMAC-SHA1</text>
+  <text x="480" y="309" fill="#94a3b8" font-size="9">(secret + time)</text>
+
+  <!-- Arrows down -->
+  <line x1="180" y1="320" x2="180" y2="340" stroke="#6366f1" stroke-width="2"/>
+  <polygon points="175,338 180,348 185,338" fill="#6366f1"/>
+  <line x1="540" y1="320" x2="540" y2="340" stroke="#10b981" stroke-width="2"/>
+  <polygon points="535,338 540,348 545,338" fill="#10b981"/>
+
+  <!-- Step 3: Generated Codes -->
+  <rect x="110" y="350" width="140" height="50" rx="10" fill="#1e293b" stroke="#6366f1" stroke-width="2" filter="url(#shadow)"/>
+  <text x="180" y="370" text-anchor="middle" fill="#94a3b8" font-size="9">generates</text>
+  <text x="180" y="390" text-anchor="middle" fill="#c7d2fe" font-size="22" font-weight="700" font-family="monospace">847293</text>
+
+  <rect x="470" y="350" width="140" height="50" rx="10" fill="#1e293b" stroke="#10b981" stroke-width="2" filter="url(#shadow)"/>
+  <text x="540" y="370" text-anchor="middle" fill="#94a3b8" font-size="9">generates</text>
+  <text x="540" y="390" text-anchor="middle" fill="#a7f3d0" font-size="22" font-weight="700" font-family="monospace">847293</text>
+
+  <!-- Comparison arrows -->
+  <line x1="250" y1="375" x2="470" y2="375" stroke="#22c55e" stroke-width="2"/>
+  <polygon points="260,371 250,375 260,379" fill="#22c55e"/>
+  <polygon points="460,371 470,375 460,379" fill="#22c55e"/>
+
+  <!-- Match badge -->
+  <rect x="310" y="358" width="100" height="34" rx="17" fill="url(#matchGrad)" filter="url(#shadow)"/>
+  <text x="360" y="371" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">MATCH</text>
+  <text x="360" y="384" text-anchor="middle" fill="#dcfce7" font-size="14">&#10003;</text>
+
+  <!-- Result -->
+  <rect x="200" y="435" width="320" height="50" rx="12" fill="#1e293b" stroke="#22c55e" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="360" y="456" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">IDENTITY VERIFIED</text>
+  <text x="360" y="474" text-anchor="middle" fill="#64748b" font-size="10">Server issues access_token + refresh_token</text>
+
+  <!-- Arrow to result -->
+  <line x1="360" y1="400" x2="360" y2="435" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <polygon points="355,433 360,440 365,433" fill="#22c55e"/>
+
+  <!-- Footer note -->
+  <text x="360" y="508" text-anchor="middle" fill="#475569" font-size="9">Both sides compute independently — no network communication needed between server and phone</text>
+</svg>

@@ -1,0 +1,265 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 660" font-family="'Segoe UI', system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.25"/>
+    </filter>
+    <style>
+      @keyframes flowRight {
+        0%   { stroke-dashoffset: 24; opacity: 0; }
+        8%   { opacity: 1; }
+        92%  { opacity: 1; }
+        100% { stroke-dashoffset: 0;  opacity: 0; }
+      }
+      @keyframes flowLeft {
+        0%   { stroke-dashoffset: 0;  opacity: 0; }
+        8%   { opacity: 1; }
+        92%  { opacity: 1; }
+        100% { stroke-dashoffset: 24; opacity: 0; }
+      }
+      @keyframes pillRight {
+        0%   { transform: translateX(0px);   opacity: 0; }
+        8%   { opacity: 1; }
+        92%  { opacity: 1; }
+        100% { transform: translateX(390px); opacity: 0; }
+      }
+      @keyframes pillLeft {
+        0%   { transform: translateX(390px); opacity: 0; }
+        8%   { opacity: 1; }
+        92%  { opacity: 1; }
+        100% { transform: translateX(0px);   opacity: 0; }
+      }
+      .step1-pill  { animation: pillRight 2.8s  0.0s  infinite ease-in-out; opacity: 0; }
+      .step2-pill  { animation: pillLeft  2.8s  3.5s  infinite ease-in-out; opacity: 0; }
+      .step3-pill  { animation: pillRight 2.8s  7.0s  infinite ease-in-out; opacity: 0; }
+      .step4-pill  { animation: pillRight 2.8s  10.5s infinite ease-in-out; opacity: 0; }
+      .step5-pill  { animation: pillLeft  2.8s  14.0s infinite ease-in-out; opacity: 0; }
+
+      .step1-line  { stroke-dasharray: 8,8; animation: flowRight 2.8s  0.0s  infinite linear; opacity: 0; }
+      .step2-line  { stroke-dasharray: 8,8; animation: flowLeft  2.8s  3.5s  infinite linear; opacity: 0; }
+      .step3-line  { stroke-dasharray: 8,8; animation: flowRight 2.8s  7.0s  infinite linear; opacity: 0; }
+      .step4-line  { stroke-dasharray: 8,8; animation: flowRight 2.8s  10.5s infinite linear; opacity: 0; }
+      .step5-line  { stroke-dasharray: 8,8; animation: flowLeft  2.8s  14.0s infinite linear; opacity: 0; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="860" height="660" rx="14" fill="url(#bg)"/>
+
+  <!-- ─── Title ─── -->
+  <text x="430" y="42" text-anchor="middle" fill="#e2e8f0" font-size="19" font-weight="700" letter-spacing="0.3">Token-Based Authentication Flow (JWT)</text>
+  <text x="430" y="64" text-anchor="middle" fill="#64748b" font-size="11">How credentials become tokens, and how tokens protect every request</text>
+
+  <!-- ─── Column headers ─── -->
+  <!-- Browser -->
+  <rect x="40" y="82" width="170" height="46" rx="11" fill="#6366f1" filter="url(#shadow)"/>
+  <text x="125" y="101" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">BROWSER</text>
+  <text x="125" y="119" text-anchor="middle" fill="#c7d2fe" font-size="10">Client / App</text>
+
+  <!-- Server -->
+  <rect x="345" y="82" width="170" height="46" rx="11" fill="#059669" filter="url(#shadow)"/>
+  <text x="430" y="101" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">SERVER</text>
+  <text x="430" y="119" text-anchor="middle" fill="#a7f3d0" font-size="10">API + Auth Logic</text>
+
+  <!-- Token legend panel -->
+  <rect x="650" y="82" width="175" height="200" rx="11" fill="#1e293b" stroke="#334155" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="737" y="106" text-anchor="middle" fill="#94a3b8" font-size="10" font-weight="700" letter-spacing="1">TOKEN REFERENCE</text>
+
+  <rect x="668" y="118" width="139" height="50" rx="8" fill="#4f46e5"/>
+  <text x="737" y="138" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">Access Token</text>
+  <text x="737" y="155" text-anchor="middle" fill="#c7d2fe" font-size="10">Expires in 30 minutes</text>
+  <text x="737" y="168" text-anchor="middle" fill="#a5b4fc" font-size="9">Sent with every API request</text>
+
+  <rect x="668" y="178" width="139" height="50" rx="8" fill="#be123c"/>
+  <text x="737" y="198" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">Refresh Token</text>
+  <text x="737" y="215" text-anchor="middle" fill="#fecdd3" font-size="10">Expires in 24 hours</text>
+  <text x="737" y="228" text-anchor="middle" fill="#fda4af" font-size="9">Only sent to /token/refresh/</text>
+
+  <rect x="668" y="238" width="139" height="34" rx="8" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1"/>
+  <text x="737" y="255" text-anchor="middle" fill="#93c5fd" font-size="9" font-weight="600">Neither token carries</text>
+  <text x="737" y="268" text-anchor="middle" fill="#93c5fd" font-size="9">your password — ever</text>
+
+  <!-- Timeline lines -->
+  <line x1="125" y1="134" x2="125" y2="612" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,6"/>
+  <line x1="430" y1="134" x2="430" y2="612" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,6"/>
+
+
+  <!-- ════════════════════════════════════════════════
+       STEP 1 — User logs in with credentials
+  ════════════════════════════════════════════════ -->
+  <circle cx="50" cy="172" r="14" fill="#6366f1"/>
+  <text x="50" y="177" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">1</text>
+
+  <!-- Browser box -->
+  <rect x="70" y="154" width="110" height="38" rx="8" fill="#1e293b" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="125" y="169" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="600">User types</text>
+  <text x="125" y="184" text-anchor="middle" fill="#94a3b8" font-size="9">username + password</text>
+
+  <!-- Label above arrow -->
+  <text x="280" y="152" text-anchor="middle" fill="#818cf8" font-size="10" font-weight="600">POST  /api/v1/auth/login/</text>
+
+  <!-- Static guide line -->
+  <line x1="180" y1="173" x2="432" y2="173" stroke="#334155" stroke-width="1" stroke-dasharray="4,6"/>
+  <!-- Animated flow line -->
+  <line x1="180" y1="173" x2="420" y2="173" stroke="#6366f1" stroke-width="2" class="step1-line"/>
+  <!-- Arrowhead (right) -->
+  <polygon points="422,163 442,173 422,183" fill="#6366f1" stroke="#818cf8" stroke-width="1.5"/>
+
+  <!-- Animated pill -->
+  <g class="step1-pill" style="transform-origin: 180px 173px;">
+    <rect x="180" y="160" width="148" height="26" rx="13" fill="#4f46e5"/>
+    <text x="254" y="178" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">username + password</text>
+  </g>
+
+  <!-- Server box -->
+  <rect x="442" y="154" width="148" height="38" rx="8" fill="#1e293b" stroke="#059669" stroke-width="1.5"/>
+  <text x="516" y="169" text-anchor="middle" fill="#34d399" font-size="10" font-weight="600">Checks username</text>
+  <text x="516" y="184" text-anchor="middle" fill="#94a3b8" font-size="9">Verifies password hash</text>
+
+
+  <!-- ════════════════════════════════════════════════
+       STEP 2 — Server issues both tokens
+  ════════════════════════════════════════════════ -->
+  <circle cx="50" cy="262" r="14" fill="#059669"/>
+  <text x="50" y="267" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">2</text>
+
+  <!-- Server box -->
+  <rect x="442" y="240" width="148" height="48" rx="8" fill="#1e293b" stroke="#059669" stroke-width="1.5"/>
+  <text x="516" y="258" text-anchor="middle" fill="#34d399" font-size="10" font-weight="600">Issues two tokens</text>
+  <text x="516" y="272" text-anchor="middle" fill="#a78bfa" font-size="9">Access Token   (30 min)</text>
+  <text x="516" y="284" text-anchor="middle" fill="#f87171" font-size="9">Refresh Token  (24 hrs)</text>
+
+  <!-- Label above arrow -->
+  <text x="280" y="242" text-anchor="middle" fill="#34d399" font-size="10" font-weight="600">Server responds with both tokens</text>
+
+  <!-- Static guide line -->
+  <line x1="180" y1="263" x2="432" y2="263" stroke="#334155" stroke-width="1" stroke-dasharray="4,6"/>
+  <!-- Animated flow line -->
+  <line x1="180" y1="263" x2="420" y2="263" stroke="#34d399" stroke-width="2" class="step2-line"/>
+  <!-- Arrowhead (left) -->
+  <polygon points="178,253 158,263 178,273" fill="#34d399" stroke="#6ee7b7" stroke-width="1.5"/>
+
+  <!-- Animated pill — two tokens side by side -->
+  <g class="step2-pill" style="transform-origin: 420px 263px;">
+    <rect x="222" y="250" width="100" height="26" rx="13" fill="#4f46e5"/>
+    <text x="272" y="268" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">Access Token</text>
+    <rect x="328" y="250" width="100" height="26" rx="13" fill="#be123c"/>
+    <text x="378" y="268" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">Refresh Token</text>
+  </g>
+
+  <!-- Browser stores -->
+  <rect x="70" y="240" width="110" height="38" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+  <text x="125" y="257" text-anchor="middle" fill="#94a3b8" font-size="9">Browser stores both</text>
+  <text x="125" y="271" text-anchor="middle" fill="#64748b" font-size="9">in memory / cookie</text>
+
+
+  <!-- ════════════════════════════════════════════════
+       STEP 3 — Every API request uses the Access Token
+  ════════════════════════════════════════════════ -->
+  <circle cx="50" cy="360" r="14" fill="#7c3aed"/>
+  <text x="50" y="365" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">3</text>
+
+  <!-- Browser box -->
+  <rect x="70" y="338" width="110" height="46" rx="8" fill="#1e293b" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="125" y="355" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="600">Every API call</text>
+  <text x="125" y="369" text-anchor="middle" fill="#a78bfa" font-size="9">sends Access Token</text>
+  <text x="125" y="381" text-anchor="middle" fill="#64748b" font-size="8">in Authorization header</text>
+
+  <!-- Label above arrow -->
+  <text x="280" y="338" text-anchor="middle" fill="#a78bfa" font-size="10" font-weight="600">Authorization: Bearer  &lt;Access Token&gt;</text>
+
+  <!-- Static guide line -->
+  <line x1="180" y1="361" x2="432" y2="361" stroke="#334155" stroke-width="1" stroke-dasharray="4,6"/>
+  <!-- Animated flow line -->
+  <line x1="180" y1="361" x2="420" y2="361" stroke="#7c3aed" stroke-width="2" class="step3-line"/>
+  <!-- Arrowhead (right) -->
+  <polygon points="422,351 442,361 422,371" fill="#7c3aed" stroke="#a78bfa" stroke-width="1.5"/>
+
+  <!-- Animated pill -->
+  <g class="step3-pill" style="transform-origin: 180px 361px;">
+    <rect x="180" y="349" width="108" height="26" rx="13" fill="#4f46e5"/>
+    <text x="234" y="367" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">Access Token</text>
+  </g>
+
+  <!-- Server box -->
+  <rect x="442" y="338" width="148" height="46" rx="8" fill="#1e293b" stroke="#059669" stroke-width="1.5"/>
+  <text x="516" y="355" text-anchor="middle" fill="#34d399" font-size="10" font-weight="600">Verifies signature</text>
+  <text x="516" y="369" text-anchor="middle" fill="#94a3b8" font-size="9">No database lookup needed</text>
+  <text x="516" y="381" text-anchor="middle" fill="#e2e8f0" font-size="9">Returns requested data</text>
+
+
+  <!-- ════════════════════════════════════════════════
+       STEP 4 — Access Token expires → send Refresh Token
+  ════════════════════════════════════════════════ -->
+  <circle cx="50" cy="460" r="14" fill="#d97706"/>
+  <text x="50" y="465" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">4</text>
+
+  <!-- Browser box -->
+  <rect x="70" y="440" width="110" height="38" rx="8" fill="#1e293b" stroke="#d97706" stroke-width="1.5"/>
+  <text x="125" y="457" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="600">Access Token expired</text>
+  <text x="125" y="471" text-anchor="middle" fill="#94a3b8" font-size="9">Sends Refresh Token</text>
+
+  <!-- Label above arrow -->
+  <text x="280" y="440" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="600">POST  /api/v1/auth/token/refresh/</text>
+
+  <!-- Static guide line -->
+  <line x1="180" y1="461" x2="432" y2="461" stroke="#334155" stroke-width="1" stroke-dasharray="4,6"/>
+  <!-- Animated flow line -->
+  <line x1="180" y1="461" x2="420" y2="461" stroke="#d97706" stroke-width="2" class="step4-line"/>
+  <!-- Arrowhead (right) -->
+  <polygon points="422,451 442,461 422,471" fill="#d97706" stroke="#fbbf24" stroke-width="1.5"/>
+
+  <!-- Animated pill -->
+  <g class="step4-pill" style="transform-origin: 180px 461px;">
+    <rect x="180" y="449" width="108" height="26" rx="13" fill="#be123c"/>
+    <text x="234" y="467" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">Refresh Token</text>
+  </g>
+
+  <!-- Server box -->
+  <rect x="442" y="440" width="148" height="50" rx="8" fill="#1e293b" stroke="#059669" stroke-width="1.5"/>
+  <text x="516" y="457" text-anchor="middle" fill="#34d399" font-size="10" font-weight="600">Validates Refresh Token</text>
+  <text x="516" y="471" text-anchor="middle" fill="#f87171" font-size="9">Blacklists old Refresh Token</text>
+  <text x="516" y="483" text-anchor="middle" fill="#a78bfa" font-size="9">Issues new token pair</text>
+
+
+  <!-- ════════════════════════════════════════════════
+       STEP 5 — Server returns new Access Token silently
+  ════════════════════════════════════════════════ -->
+  <circle cx="50" cy="558" r="14" fill="#0891b2"/>
+  <text x="50" y="563" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">5</text>
+
+  <!-- Server box -->
+  <rect x="442" y="538" width="148" height="38" rx="8" fill="#1e293b" stroke="#0891b2" stroke-width="1.5"/>
+  <text x="516" y="555" text-anchor="middle" fill="#67e8f9" font-size="10" font-weight="600">New Access Token</text>
+  <text x="516" y="569" text-anchor="middle" fill="#94a3b8" font-size="9">New Refresh Token (rotated)</text>
+
+  <!-- Label above arrow -->
+  <text x="280" y="538" text-anchor="middle" fill="#67e8f9" font-size="10" font-weight="600">Silent refresh — user sees nothing</text>
+
+  <!-- Static guide line -->
+  <line x1="180" y1="559" x2="432" y2="559" stroke="#334155" stroke-width="1" stroke-dasharray="4,6"/>
+  <!-- Animated flow line -->
+  <line x1="180" y1="559" x2="420" y2="559" stroke="#0891b2" stroke-width="2" class="step5-line"/>
+  <!-- Arrowhead (left) -->
+  <polygon points="178,549 158,559 178,569" fill="#0891b2" stroke="#67e8f9" stroke-width="1.5"/>
+
+  <!-- Animated pill — two new tokens -->
+  <g class="step5-pill" style="transform-origin: 420px 559px;">
+    <rect x="222" y="547" width="100" height="26" rx="13" fill="#0e7490"/>
+    <text x="272" y="565" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">New Access Token</text>
+    <rect x="328" y="547" width="100" height="26" rx="13" fill="#9f1239"/>
+    <text x="378" y="565" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">New Refresh Token</text>
+  </g>
+
+  <!-- Browser box -->
+  <rect x="70" y="538" width="110" height="38" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+  <text x="125" y="555" text-anchor="middle" fill="#94a3b8" font-size="9">Stores new tokens</text>
+  <text x="125" y="569" text-anchor="middle" fill="#34d399" font-size="9">Continues seamlessly</text>
+
+
+  <!-- ─── Footer ─── -->
+  <text x="430" y="638" text-anchor="middle" fill="#475569" font-size="9">Layer 2 — JWT Token Lifecycle  •  Steps 1–5 loop automatically during an active session</text>
+</svg>

@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+    <defs>
+      @keyframes moveRight {
+        0% { transform: translateX(0); opacity: 0; }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { transform: translateX(250px); opacity: 0; }
+      }
+      @keyframes moveLeft {
+        0% { transform: translateX(250px); opacity: 0; }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { transform: translateX(0); opacity: 0; }
+      }
+      @keyframes statusUpdate {
+        0%, 30% { content: "User Submits Login"; color: #7c3aed; }
+        31%, 60% { content: "Server Saves Session"; color: #e11d48; }
+        61%, 100% { content: "Cookie Issued to Browser"; color: #d2691e; }
+      }
+      
+      <style>
+        .text { font-family: 'Segoe UI', system-ui, sans-serif; fill: #1e293b; }
+        .label { font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .status-text { font-size: 14px; font-weight: 600; font-family: monospace; }
+        .box { rx: 12; stroke-width: 2.5; }
+        
+        .step-packet { opacity: 0; animation-duration: 4s; animation-iteration-count: infinite; }
+        .to-server { animation-name: moveRight; animation-delay: 0s; }
+        .to-db { animation-name: moveRight; animation-delay: 1.2s; }
+        .to-client { animation-name: moveLeft; animation-delay: 2.4s; }
+        
+        .status-box::after {
+          animation: statusUpdate 4s infinite;
+          content: "Initializing...";
+        }
+      </style>
+    </defs>
+  
+    <rect width="800" height="400" fill="#ffffff" />
+    
+    <rect x="300" y="20" width="200" height="30" rx="15" fill="#f1f5f9" />
+    <foreignObject x="300" y="25" width="200" height="30">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="text-align: center;">
+        <span class="status-box status-text" style="font-family: sans-serif;"></span>
+      </div>
+    </foreignObject>
+  
+    <rect x="40" y="70" width="180" height="300" class="box" fill="#f5f3ff" stroke="#7c3aed" />
+    <text x="130" y="100" text-anchor="middle" class="text label">Browser</text>
+    <circle cx="130" cy="200" r="40" fill="#ddd6fe" opacity="0.5" />
+    <text x="130" y="205" text-anchor="middle" font-size="30">💻</text>
+  
+    <rect x="310" y="70" width="180" height="300" class="box" fill="#eff6ff" stroke="#2563eb" />
+    <text x="400" y="100" text-anchor="middle" class="text label">Server</text>
+    <rect x="350" y="170" width="100" height="60" rx="4" fill="#dbeafe" stroke="#2563eb" />
+    <text x="400" y="205" text-anchor="middle" font-size="30">⚙️</text>
+  
+    <rect x="580" y="70" width="180" height="300" class="box" fill="#fff1f2" stroke="#e11d48" />
+    <text x="670" y="100" text-anchor="middle" class="text label">Session DB</text>
+    <path d="M640 180 Q670 160 700 180 V220 Q670 240 640 220 Z" fill="#ffe4e6" stroke="#e11d48" stroke-width="2" />
+    <text x="670" y="210" text-anchor="middle" font-size="30">🗄️</text>
+  
+    <g class="step-packet to-server">
+      <rect x="220" y="185" width="40" height="25" rx="4" fill="#7c3aed" />
+      <text x="240" y="202" text-anchor="middle" fill="white" font-size="10" font-weight="bold">CRED</text>
+    </g>
+  
+    <g class="step-packet to-db">
+      <rect x="490" y="185" width="40" height="25" rx="4" fill="#e11d48" />
+      <text x="510" y="202" text-anchor="middle" fill="white" font-size="10" font-weight="bold">DATA</text>
+    </g>
+  
+    <g class="step-packet to-client">
+      <circle cx="240" cy="197" r="12" fill="#d2691e" />
+      <text x="240" y="201" text-anchor="middle" fill="white" font-size="14">🍪</text>
+    </g>
+  
+    <path d="M220 197 H310" stroke="#cbd5e1" stroke-dasharray="5,5" />
+    <path d="M490 197 H580" stroke="#cbd5e1" stroke-dasharray="5,5" />
+  
+  </svg>
